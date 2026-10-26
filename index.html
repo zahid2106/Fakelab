@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Al-Shazaib Lab Manager</title>
+<style>
+:root{--bg:#eef1f5;--fg:#1a1d23;--card:#fff;--bd:#cfd6df;--ac:#1a237e;--ac2:#fff;--rd:#b00020;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--fg:#e8eaee;--card:#222730;--bd:#3a4250;--ac:#8c97ff;--ac2:#10131a;--rd:#ff8a80}}
+:root[data-theme="dark"]{--bg:#15181d;--fg:#e8eaee;--card:#222730;--bd:#3a4250;--ac:#8c97ff;--ac2:#10131a;--rd:#ff8a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:Arial,Helvetica,sans-serif}
+#app{max-width:760px;margin:0 auto;padding:12px}
+h1{font-size:20px;color:var(--ac);margin:4px 0 10px}h3{margin:14px 0 6px;color:var(--ac);font-size:15px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px}
+button{background:var(--ac);color:var(--ac2);border:0;border-radius:8px;padding:9px 13px;font-weight:bold;font-size:14px}
+button.s{background:transparent;color:var(--ac);border:1px solid var(--ac)}button.d{background:transparent;color:var(--rd);border:1px solid var(--rd)}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between}
+input,select,textarea{width:100%;padding:8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg);font-size:15px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g label{font-size:12px;opacity:.8}
+.chk{display:flex;gap:14px;flex-wrap:wrap}.chk label{display:flex;gap:5px;align-items:center;font-size:14px}.chk input{width:auto}
+.t{display:grid;grid-template-columns:1fr 78px 20px;gap:6px;align-items:center;padding:4px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.t small{display:block;opacity:.7}.t b{color:var(--rd);font-size:17px}
+.t input{padding:6px;text-align:center;font-weight:bold}
+.pv{overflow-x:auto}
+/* report */
+.page{width:794px;min-height:1120px;margin:0 auto;background:#fff;color:#000;padding:14px 33px 12px;font-size:12.5px;font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column}
+.top{position:relative;height:20px;margin:0 0 26px}.top::before,.top::after{content:"";position:absolute}.top::before{left:0;top:0;width:74%;height:20px;background:#7a7a7a;clip-path:polygon(0 0,94.5% 0,100% 100%,0 100%)}.top::after{left:73%;right:0;top:12px;height:8px;background:#5cd0f0;clip-path:polygon(6% 0,100% 0,100% 100%,0 100%)}
+.head{display:flex;align-items:center;gap:10px}
+.logo{width:92px;height:92px;flex:none;border-radius:50%;background:#1a2cd0;border:4px solid #fff;outline:2px solid #1a2cd0;display:grid;place-items:center;color:#fff;font-size:10px;text-align:center;font-weight:bold}
+.logo b{display:block;font-size:32px;color:#e11}
+.cl{flex:1;min-width:0;border-left:2px solid #d00;padding-left:10px}
+.cl h1{margin:0;font:bold 29px "Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;letter-spacing:1px;color:#1b2a9e;white-space:nowrap}
+.cl .m{background:#c8f0fb;border:1px solid #9bb;text-align:center;font:italic 14px "Monotype Corsiva","Apple Chancery","URW Chancery L",Palatino,Georgia,serif;padding:2px;margin:4px 0;color:#222}
+.cl .s{border:1px solid #888;font-size:10.3px;padding:3px 5px;white-space:nowrap}
+.rt{flex:none}.ur{color:#d40000;font-size:19px;font-weight:bold;text-align:right;line-height:1.1;margin-bottom:4px}
+.rr{display:flex;gap:10px;justify-content:flex-end;align-items:flex-start}
+.lb{display:flex;gap:6px;align-items:flex-start;margin-bottom:3px}.lb>b{font-size:12.5px;width:36px;text-align:right;margin-top:2px}
+.bw{width:112px;text-align:center}.bt{font-weight:bold;font-size:13px;line-height:1.15;margin-top:1px}
+.qr{flex:none}.qr svg{display:block;shape-rendering:crispEdges}
+.ln{border-top:2px solid #333;margin:10px 0 8px}
+.info{display:grid;grid-template-columns:392px 1fr;row-gap:5px}
+.info div{display:flex;font-size:13px}.info b{flex:none;width:112px;font-size:12.5px}.info div:nth-child(even) b{width:105px}
+table.rp{width:502px;border-collapse:collapse;table-layout:fixed;margin-top:8px}
+.rp td,.rp th{padding:3px 4px;text-align:left}
+.rp .st{color:#00008b;font-size:15.5px;font-weight:bold;height:30px;vertical-align:bottom;padding:0 0 2px}
+.rp th.h{background:#c8f0fb;border:1px solid #000;font-size:12.5px;padding:1px 4px}
+.rp th.rb{border:2px solid #333;padding:0;vertical-align:top;text-align:center}
+.rh{background:#c8f0fb;font-weight:bold;font-size:13px;padding:1px 0}.rid{font-weight:bold;font-size:12.5px;padding:2px 0}.rdt{font-weight:normal;font-size:11.5px;padding-bottom:2px}
+.rp td.f{text-align:center;font-size:15px}.rp td.v{text-align:center;font-size:15px;font-weight:bold}.rp td.v.x{color:#8b0000;font-size:16px}
+.rp .gap td{height:16px;padding:0}.rp tr.sub td{font-weight:bold;padding-top:10px;text-decoration:underline}
+.note{display:grid;grid-template-columns:157px auto;column-gap:6px;margin:4px 0 0 115px;font-size:12px;line-height:1.15;width:max-content}.note span:nth-child(odd){text-align:right}
+.foot{margin-top:auto;padding-top:30px;text-align:center}
+.foot .v{font-weight:bold;font-size:11.8px;border-bottom:2px solid #333;padding-bottom:6px}
+.foot .lt{text-align:right;font-weight:bold;font-size:11.5px;margin:5px 0 14px}
+.dis{border:1px solid #333;font-size:7.4px;padding:2px 6px;line-height:1.25}.ad{background:#c8f0fb;font-size:12px;padding:4px;margin-top:3px}
+#pr{display:none}
+@media print{#app{display:none}#pr{display:block}body{background:#fff}.page{width:auto;min-height:270mm}@page{size:A4;margin:8mm}}
+</style></head><body>
+<div id="app"></div><div id="pr"></div>
+<script src="lib/html2pdf.bundle.min.js"></script>
+<script src="lib/JsBarcode.all.min.js"></script>
+<script src="lib/qrcode.min.js"></script>
+<script>
+const SEC=[
+{id:'hba1c',t:'SPECIAL CHEMISTRY REPORT',n:'DIABETIC: Excellent Control: 6.1 - 7.0 %<br>Good Control: 7.0 - 8.0 %<br>Fair Control: 8.1 - 9.0 %<br>Bad Control: Above 9.1 %',r:[['HbA1C',4,6,'%','4.0 - 6.0']]},
+{id:'cbc',t:'HEMATOLOGY REPORT - CBC',r:[['Hemoglobin (Hb)',13,17,'g/dL','13.0 - 17.0'],['Total RBC Count',4.5,5.5,'x10¹²/L','4.5 - 5.5'],['PCV / HCT',40,50,'%','40 - 50'],['MCV',83,101,'fL','83 - 101'],['MCH',27,32,'pg','27 - 32'],['MCHC',31.5,34.5,'g/dL','31.5 - 34.5'],['RDW-CV',11.6,14,'%','11.6 - 14.0'],['Total WBC Count (TLC)',4,11,'x10⁹/L','4.0 - 11.0'],'Differential Count',['Neutrophils',40,75,'%','40 - 75'],['Lymphocytes',20,45,'%','20 - 45'],['Monocytes',2,10,'%','2 - 10'],['Eosinophils',1,6,'%','1 - 6'],['Basophils',0,1,'%','0 - 1'],'Platelets',['Platelet Count',150,450,'x10⁹/L','150 - 450'],['MPV',7.5,11.5,'fL','7.5 - 11.5']]},
+{id:'inf',t:'SEROLOGY / INFECTION REPORT',r:[['Malaria Parasite (MP)','p','Negative'],['Typhidot IgM','p','Negative'],['Typhidot IgG','p','Negative'],['Widal TO','p','< 1:80'],['Widal TH','p','< 1:80'],['Dengue NS1 Antigen','p','Negative'],['Dengue IgM','p','Negative'],['HBsAg (Hepatitis B)','p','Negative'],['Anti-HCV (Hepatitis C)','p','Negative'],['HIV I & II','p','Non-Reactive'],['CRP (C-Reactive Protein)',0,6,'mg/L','< 6.0'],['ESR (1st hour)',0,20,'mm/hr','0 - 20']]}];
+const K='alshazaib_lab_v1';let DB={n:10000,p:[]};
+try{const x=localStorage.getItem(K);if(x)DB=JSON.parse(x)}catch(e){}
+const store=()=>{try{localStorage.setItem(K,JSON.stringify(DB))}catch(e){alert('Browser storage unavailable. Use Backup.')}};
+const $=s=>document.querySelector(s),A=$('#app');
+const MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const QRT='https://maps.google.com/?q=Al-Shazaib+Poly+Clinic+Ahmadpur+Sial+Jhang';
+function bc(t){try{const s=document.createElementNS('http://www.w3.org/2000/svg','svg');JsBarcode(s,t,{format:'CODE128',width:1.4,height:24,displayValue:false,margin:0});s.setAttribute('style','width:112px;height:24px;display:block');s.setAttribute('preserveAspectRatio','none');return s.outerHTML}catch(e){return'<div class="bc"></div>'}}
+function qr(t){try{const q=qrcode(0,'L');q.addData(t);q.make();const z=q.getModuleCount()*2+'px';return q.createSvgTag({cellSize:1,margin:0,scalable:true}).replace('width="100%"','width="'+z+'"').replace('height="100%"','height="'+z+'"')}catch(e){return''}}
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let cur=null,q='';
+function newRec(){const d=new Date();DB.n++;return{id:Date.now(),lab:DB.n,name:'',father:'',age:'',sex:'Male',nic:'',mr:'',contact:'',spec:'Taken in Lab',cons:'Poly Clinic.',
+ date:String(d.getDate()).padStart(2,'0')+'-'+MO[d.getMonth()]+'-'+String(d.getFullYear()).slice(2)+'   '+d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),
+ secs:['cbc'],v:{}}}
+const fl=(r,v)=>{const x=parseFloat(v);if(r[1]==='p'||isNaN(x))return'';return x>r[2]?'↑':x<r[1]?'↓':''};
+function list(){cur=null;const f=DB.p.filter(p=>(p.name+p.lab+p.contact).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.id-a.id);
+A.innerHTML='<h1>Al-Shazaib Poly Clinic · Lab</h1><div class="row"><button onclick="edit()">+ New Patient</button><button class="s" onclick="bk()">Backup / Restore</button></div><div style="margin:10px 0"><input id="qs" placeholder="Search name, lab # or phone" value="'+esc(q)+'"></div>'+
+(f.length?f.map(p=>'<div class="card"><div class="row sp"><b>'+esc(p.name||'(no name)')+'</b><span>Lab # '+p.lab+'</span></div><small>'+esc(p.age)+' · '+esc(p.sex)+' · '+esc(p.date)+' · '+p.secs.map(s=>s.toUpperCase()).join(', ')+'</small><div class="row" style="margin-top:8px"><button onclick="edit('+p.id+')">Open</button><button class="s" onclick="prev('+p.id+')">Print</button><button class="d" onclick="del('+p.id+')">Delete</button></div></div>').join(''):'<p>No patients yet. Tap “New Patient”.</p>');
+$('#qs').oninput=e=>{q=e.target.value;const p=e.target.selectionStart;list();const i=$('#qs');i.focus();i.setSelectionRange(p,p)}}
+function del(id){if(confirm('Delete this patient record?')){DB.p=DB.p.filter(p=>p.id!==id);store();list()}}
+function edit(id){cur=id?JSON.parse(JSON.stringify(DB.p.find(p=>p.id===id))):newRec();form()}
+function form(){const F=[['name','Patient’s Name'],['father','Father/Husband'],['age','Age (e.g. 47 Years)'],['sex','Sex'],['nic','NIC No'],['mr','MR #'],['contact','Contact No'],['spec','Specimen'],['cons','Consultant'],['date','Reg. Date']];
+A.innerHTML='<div class="row sp"><h1>Lab # '+cur.lab+'</h1><button class="s" onclick="save(1)">← Back</button></div><div class="card"><div class="g">'+F.map(([k,l])=>'<div><label>'+l+'</label>'+(k==='sex'?'<select data-k="sex">'+['Male','Female'].map(o=>'<option'+(cur.sex===o?' selected':'')+'>'+o+'</option>').join('')+'</select>':'<input data-k="'+k+'" value="'+esc(cur[k])+'">')+'</div>').join('')+'</div></div>'+
+'<h3>Select tests</h3><div class="card chk">'+SEC.map(s=>'<label><input type="checkbox" data-s="'+s.id+'" '+(cur.secs.includes(s.id)?'checked':'')+'>'+s.id.toUpperCase()+'</label>').join('')+'</div>'+
+SEC.filter(s=>cur.secs.includes(s.id)).map(s=>'<h3>'+s.t+'</h3><div class="card">'+s.r.map((r,i)=>{if(typeof r==='string')return'<div style="font-weight:bold;margin-top:8px">'+r+'</div>';const k=s.id+i,p=r[1]==='p';
+ return'<div class="t"><div>'+r[0]+'<small>Ref: '+(p?r[2]:r[4]+' '+r[3])+'</small></div><input data-v="'+k+'" '+(p?'list="pn" ':'inputmode="decimal" ')+'value="'+esc(cur.v[k])+'"><b id="f'+k+'">'+fl(r,cur.v[k])+'</b></div>'}).join('')+'</div>').join('')+
+'<datalist id="pn"><option>Negative<option>Positive<option>Reactive<option>Non-Reactive</datalist><div class="row" style="margin:12px 0 30px"><button onclick="save(0)">Save</button><button class="s" onclick="prev(cur.id,1)">Preview / Print</button></div>';
+A.querySelectorAll('[data-k]').forEach(e=>e.oninput=()=>cur[e.dataset.k]=e.value);
+A.querySelectorAll('[data-v]').forEach(e=>e.oninput=()=>{cur.v[e.dataset.v]=e.value;const m=e.dataset.v.match(/^([a-z0-9]+?)(\d+)$/);const s=SEC.find(x=>x.id===m[1]),r=s.r[+m[2]];$('#f'+e.dataset.v).textContent=fl(r,e.value)});
+A.querySelectorAll('[data-s]').forEach(e=>e.onchange=()=>{const s=e.dataset.s;cur.secs=e.checked?[...cur.secs,s]:cur.secs.filter(x=>x!==s);const y=scrollY;form();scrollTo(0,y)})}
+function save(back){if(cur){const i=DB.p.findIndex(p=>p.id===cur.id);if(i<0)DB.p.push(cur);else DB.p[i]=cur;store()}if(back)list();else alert('Saved')}
+function report(p){const d=new Date(p.id),yr=d.getFullYear(),mo=d.getMonth()+1,pad=n=>String(n).padStart(2,'0'),
+ rid=p.lab+':'+mo+':'+yr,rdt=pad(d.getDate())+'-'+MO[d.getMonth()]+'-'+String(yr).slice(2)+' '+pad(d.getHours())+':'+pad(d.getMinutes()),
+ labT=p.lab+' - '+mo+' / '+yr,csT=String(p.lab).slice(-2)+' - '+d.getDate()+' / '+mo;let h='';
+ SEC.filter(s=>p.secs.includes(s.id)).forEach(s=>{
+ let rows=s.r.map((r,i)=>[r,p.v[s.id+i]]).filter(([r,v])=>typeof r==='string'||(v!==undefined&&String(v).trim()!==''));
+ rows=rows.filter(([r],i)=>typeof r!=='string'||(rows[i+1]&&typeof rows[i+1][0]!=='string'));
+ if(!rows.length)return;
+ h+='<table class="rp"><colgroup><col style="width:151px"><col style="width:149px"><col style="width:93px"><col style="width:22px"><col style="width:87px"></colgroup><tr><td colspan="3" class="st">'+s.t+'</td><td></td><th rowspan="2" class="rb"><div class="rh">RESULT</div><div class="rid">'+rid+'</div><div class="rdt">'+rdt+'</div></th></tr><tr><th class="h">TEST</th><th class="h">REFERENCE RANGE</th><th class="h">UNIT</th><td></td></tr><tr class="gap"><td colspan="5"></td></tr>'+rows.map(([r,v])=>{
+  if(typeof r==='string')return'<tr class="sub"><td colspan="5">'+r+'</td></tr>';const f=fl(r,v),q=r[1]==='p';
+  return'<tr><td>'+r[0]+'</td><td>'+(q?r[2]:r[4])+'</td><td>'+(q?'':r[3])+'</td><td class="f">'+f+'</td><td class="v'+(f?' x':'')+'">'+esc(v)+'</td></tr>'}).join('')+'</table>'+
+ (s.n?'<div class="note">'+s.n.split('<br>').map(l=>{const i=l.lastIndexOf(': ');return'<span>'+l.slice(0,i+1)+'</span><span>'+l.slice(i+2)+'</span>'}).join('')+'</div>':'')});
+ const I=(l,v,n)=>'<div><b>'+l+'</b><span'+(n?' style="font-weight:bold;font-size:14px"':'')+'>: '+esc(v)+'</span></div>';
+ return'<div class="page"><div class="top"></div><div class="head"><div class="logo"><div>AL-SHAZAIB<b>✚</b>POLY CLINIC</div></div><div class="cl"><h1>Al-Shazaib Poly Clinic</h1><div class="m">Our Mission - Your Health</div><div class="s">OPD - Lab - Color Doppler Ultrasound - ECG - Pharmacy - Digital X-Ray</div></div><div class="rt"><div class="ur">الشازیب پولی کلینک اینڈ لیب</div><div class="rr"><div><div class="lb"><b>Lab #</b><div class="bw">'+bc(labT)+'<div class="bt">'+labT+'</div></div></div><div class="lb"><b>Case #</b><div class="bw">'+bc('C'+csT)+'<div class="bt">'+csT+'</div></div></div></div><div class="qr">'+qr(QRT)+'</div></div></div></div><div class="ln"></div>'+
+ '<div class="info">'+I('Patient’s Name',p.name,1)+I('Reg. Date',p.date)+I('Father/Husband',p.father)+I('Reg. Centre','Al-Shazaib Poly Clinic')+I('Age/Sex',p.age+' / '+p.sex)+I('Specimen',p.spec)+I('NIC No',p.nic)+I('Consultant',p.cons)+I('MR #',p.mr)+I('Contact No',p.contact)+'</div><div class="ln" style="margin-top:8px"></div>'+(h||'<p>No results entered.</p>')+
+ '<div class="foot"><div class="v">Electronically Verified Report, No Signature(s) Required.</div><div class="lt">LAB TECHNICIAN</div><div class="dis">NOTE: All the tests are performed on the most advanced, appropriate and state of the art instruments with highly sensitive chemicals under strict conditions and with all care and diligence. However, the above results are NOT the DIAGNOSIS and should be correlated with clinical findings, patient’s history, signs and symptoms and other diagnostic tests. Lab to lab variation may occur. The responsibility for the lab results is only for this specific sample. This document is NEVER challengeable at any PLACE/COURT and in any CONDITION.</div><div class="ad">Near T.H.Q Hospital Ahmadpur Sial (Jhang) Contact # 0301-2364399, 0310-7524897 Email alshazaiblab399@gmail.com</div></div></div>'}
+function prev(id,fromForm){let p=fromForm?cur:DB.p.find(x=>x.id===id);pv=p;if(fromForm)save(2);
+ $('#pr').innerHTML=report(p);A.innerHTML='<div class="row" style="margin-bottom:10px"><button onclick="doPrint()">🖨 Print</button><button id="pb" onclick="pdf()">⬇ Save PDF</button><button class="s" onclick="'+(fromForm?'form()':'list()')+'">← Back</button></div><div class="pv" id="pvp">'+report(p)+'</div>'}
+function bk(){A.innerHTML='<div class="row sp"><h1>Backup / Restore</h1><button class="s" onclick="list()">← Back</button></div><div class="card"><p style="font-size:13px">Data is stored in this browser only. Copy the text below and keep it safe. To restore, paste a backup and tap Restore.</p><textarea id="bt" rows="10">'+esc(JSON.stringify(DB))+'</textarea><div class="row" style="margin-top:8px"><button onclick="$(\'#bt\').select();document.execCommand(\'copy\')">Copy</button><button class="d" onclick="rs()">Restore</button></div></div>'}
+function rs(){try{const d=JSON.parse($('#bt').value);if(!d.p)throw 0;if(confirm('Replace all current data?')){DB=d;store();list()}}catch(e){alert('Invalid backup text')}}
+const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
+async function out(name,blob){if(NATIVE){const b64=await new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(',')[1]);f.readAsDataURL(blob)});const P=Capacitor.Plugins;const w=await P.Filesystem.writeFile({path:name,data:b64,directory:'CACHE'});await P.Share.share({title:name,url:w.uri,dialogTitle:'Save or print report'})}else await dl.save({filename:name,data:blob})}
+function doPrint(){NATIVE?pdf():window.print()}
+let pv=null,dl=null;
+(async()=>{try{dl=await window.claude.use('downloads')}catch(e){}})();
+async function pdf(){const b=$('#pb');
+ if((!dl&&!NATIVE)||typeof html2pdf==='undefined'){alert('Direct PDF save is unavailable here. Tap Print and choose “Save as PDF”.');return}
+ b.disabled=true;b.textContent='Creating PDF…';
+ try{const blob=await html2pdf().set({margin:0,image:{type:'jpeg',quality:.98},html2canvas:{scale:2,useCORS:true,windowWidth:794},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from($('#pvp .page')).outputPdf('blob');
+ await out((pv.name||'patient').replace(/[^\w\- ]+/g,'')+'_Lab'+pv.lab+'.pdf',blob)}
+ catch(e){if(!e||e.code!=='declined')alert('Could not save PDF'+(e&&e.message?': '+e.message:''))}
+ b.disabled=false;b.textContent='⬇ Save PDF'}
+list();
+</script></body></html>
