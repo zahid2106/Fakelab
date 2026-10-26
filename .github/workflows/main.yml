@@ -17,9 +17,11 @@ jobs:
           java-version: 17
       - name: Install packages
         run: npm install
-      - name: Download libraries
+      - name: Prepare web files
         run: |
           mkdir -p www/lib
+          if [ ! -f www/index.html ]; then cp index.html www/index.html; fi
+          test -f www/index.html || { echo "index.html is missing from the repository"; exit 1; }
           curl -fL -o www/lib/html2pdf.bundle.min.js https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js
           curl -fL -o www/lib/JsBarcode.all.min.js https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js
           curl -fL -o www/lib/qrcode.min.js https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js
